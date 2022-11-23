@@ -15,9 +15,9 @@ jobs:
   build:
     docker:
       - image: cimg/php:8.1.12
-    branches:
-       only:
-         - circleci
+    # branches:
+    #    only:
+    #      - circleci
     steps:
       - checkout
       - run: sudo docker-php-ext-install zip
