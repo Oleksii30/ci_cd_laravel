@@ -15,9 +15,7 @@ jobs:
   build:
     docker:
       - image: cimg/php:8.1.12
-    # branches:
-    #    only:
-    #      - circleci
+
     steps:
       - checkout
       - run: sudo docker-php-ext-install zip
@@ -36,6 +34,11 @@ jobs:
           paths:
             - ./vendor
 
+       # Add everything (except vendors that will be installed automatically and node_modules that are not needed because we already built js and css) to a ZIP
+      - run:
+          name: ZIP project
+          #working_directory: ~/repo
+          command: zip test_project.zip -r * .[^.]* --exclude=node_modules/* --exclude=.circleci/* --exclude=.elasticbeanstalk/*
 
 # Orchestrate our job run sequence
 workflows:

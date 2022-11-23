@@ -1,0 +1,11 @@
+branch-defaults:
+  circleci:
+    environment: prod_env
+global:
+  application_name: ci_cd_laravel
+  default_ec2_keyname: null
+  default_platform: PHP 8.1 running on 64bit Amazon Linux 2/3.5.1
+  default_region: us-west-1
+  sc: git
+deploy:
+  artifact: test_project.zip
