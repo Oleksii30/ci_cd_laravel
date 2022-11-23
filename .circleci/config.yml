@@ -36,21 +36,30 @@ jobs:
           paths:
             - ./vendor
 
+      # Install software required to run EB deployer
+      - run:
+          name: Installing deployment dependencies
+          #working_directory: ~/repo
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install "urllib3<1.23,>=1.21.1" awsebcli --upgrade
+
        # Add everything (except vendors that will be installed automatically and node_modules that are not needed because we already built js and css) to a ZIP
       - run:
           name: ZIP project
           #working_directory: ~/repo
           command: zip test_project.zip -r * .[^.]* --exclude=vendor/* --exclude=node_modules/* --exclude=.circleci/* --exclude=.elasticbeanstalk/*
-      # - run:
-      #     name: Deploy project
-      #     #command: eb deploy --staged prod_env
-      #     command: eb deploy
-  deploy:
-    executor: aws-cli/default
-    steps:
       - run:
           name: Deploy project
+          #command: eb deploy --staged prod_env
           command: eb deploy
+  # deploy:
+  #   executor: aws-cli/default
+  #   steps:
+  #     - run:
+  #         name: Deploy project
+  #         command: eb deploy
 
 # Orchestrate our job run sequence
 workflows:
@@ -61,6 +70,6 @@ workflows:
       - build:
           requires:
             - aws-cli-cred-setup
-      - deploy:
-          requires:
-            - build
+      # - deploy:
+      #     requires:
+      #       - build
