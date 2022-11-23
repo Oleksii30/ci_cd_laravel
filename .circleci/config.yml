@@ -43,7 +43,7 @@ jobs:
           name: Installing deployment dependencies
           working_directory: ~/repo
           command: |
-            sudo apt-get install python3.7
+            sudo apt-get install python3
             curl -O https://bootstrap.pypa.io/get-pip.py
             python3 get-pip.py
             pip install awsebcli --upgrade
