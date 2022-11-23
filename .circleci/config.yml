@@ -62,6 +62,8 @@ jobs:
     docker:
         - image: 'cimg/base:stable'
     steps:
+      - checkout
+      - eb/setup
       - run:
           name: Deploy project
           command: eb deploy
