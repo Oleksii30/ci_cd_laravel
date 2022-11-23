@@ -63,10 +63,10 @@ jobs:
         - image: 'cimg/base:stable'
     steps:
       - checkout
-      - eb/setup:
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-region: AWS_REGION_NAME
+      - eb/setup
+          # aws-access-key-id: AWS_ACCESS_KEY_ID
+          # aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          # aws-region: AWS_REGION_NAME
       - run:
           name: Deploy project
           command: eb deploy
