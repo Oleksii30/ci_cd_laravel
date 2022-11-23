@@ -10,7 +10,7 @@ jobs:
       executor: aws-cli/default
       steps:
         - aws-cli/setup:
-            aws-access-key-id: AWS_ACCESS_KEY
+            aws-access-key-id: AWS_ACCESS_KEY_ID
             aws-secret-access-key: AWS_SECRET_ACCESS_KEY
             aws-region: AWS_REGION_NAME
   build:
@@ -63,7 +63,10 @@ jobs:
         - image: 'cimg/base:stable'
     steps:
       - checkout
-      - eb/setup
+      - eb/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_REGION_NAME
       - run:
           name: Deploy project
           command: eb deploy
