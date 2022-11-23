@@ -12,6 +12,10 @@ jobs:
             aws-access-key-id: AWS_ACCESS_KEY
             aws-secret-access-key: AWS_SECRET_ACCESS_KEY
             aws-region: AWS_REGION_NAME
+        - run:
+            name: Deploy project
+            #command: eb deploy --staged prod_env
+            command: eb deploy
   build:
     docker:
       - image: cimg/php:8.1.12
@@ -39,24 +43,24 @@ jobs:
             - ./vendor
 
       # Install software required to run EB deployer
-      - run:
-          name: Installing deployment dependencies
-          working_directory: ~/repo
-          command: |
-            sudo apt-get install python3
-            curl -O https://bootstrap.pypa.io/get-pip.py
-            python3 get-pip.py
-            pip install awsebcli --upgrade
+      # - run:
+      #     name: Installing deployment dependencies
+      #     working_directory: ~/repo
+      #     command: |
+      #       sudo apt-get install python3
+      #       curl -O https://bootstrap.pypa.io/get-pip.py
+      #       python3 get-pip.py
+      #       pip install awsebcli --upgrade
 
        # Add everything (except vendors that will be installed automatically and node_modules that are not needed because we already built js and css) to a ZIP
       - run:
           name: ZIP project
           working_directory: ~/repo
           command: zip test_project.zip -r * .[^.]* --exclude=vendor/* --exclude=node_modules/* --exclude=.circleci/* --exclude=.elasticbeanstalk/*
-      - run:
-          name: Deploy project
-          #command: eb deploy --staged prod_env
-          command: eb deploy
+      # - run:
+      #     name: Deploy project
+      #     #command: eb deploy --staged prod_env
+      #     command: eb deploy
   # deploy:
   #   executor: aws-cli/default
   #   steps:
@@ -68,11 +72,11 @@ jobs:
 workflows:
   build:
     jobs:
+      - build
       - aws-cli-cred-setup:
           context: aws
-      - build:
           requires:
-            - aws-cli-cred-setup
+            - build
       # - deploy:
       #     requires:
       #       - build
