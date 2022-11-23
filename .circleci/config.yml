@@ -12,10 +12,6 @@ jobs:
             aws-access-key-id: AWS_ACCESS_KEY
             aws-secret-access-key: AWS_SECRET_ACCESS_KEY
             aws-region: AWS_REGION_NAME
-        - run:
-            name: Deploy project
-            #command: eb deploy --staged prod_env
-            command: aws ebs deploy
   build:
     docker:
       - image: cimg/php:8.1.12
@@ -72,11 +68,11 @@ jobs:
 workflows:
   build:
     jobs:
-      - build
       - aws-cli-cred-setup:
           context: aws
+      - build:
           requires:
-            - build
+            - aws-cli-cred-setup
       # - deploy:
       #     requires:
       #       - build
