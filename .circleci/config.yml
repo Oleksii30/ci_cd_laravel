@@ -41,6 +41,11 @@ jobs:
           name: ZIP project
           #working_directory: ~/repo
           command: zip test_project.zip -r * .[^.]* --exclude=vendor/* --exclude=node_modules/* --exclude=.circleci/* --exclude=.elasticbeanstalk/*
+    deploy:
+      - run:
+        name: Deploy project
+        #command: eb deploy --staged prod_env
+        command: eb deploy prod_env
 
 # Orchestrate our job run sequence
 workflows:
@@ -51,4 +56,7 @@ workflows:
       - build:
           requires:
             - aws-cli-cred-setup
+      - deploy:
+          requires:
+            - build
 
