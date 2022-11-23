@@ -41,9 +41,15 @@ jobs:
           name: ZIP project
           #working_directory: ~/repo
           command: zip test_project.zip -r * .[^.]* --exclude=vendor/* --exclude=node_modules/* --exclude=.circleci/* --exclude=.elasticbeanstalk/*
+      # - run:
+      #     name: Deploy project
+      #     #command: eb deploy --staged prod_env
+      #     command: eb deploy
+  deploy:
+    executor: aws-cli/default
+    steps:
       - run:
           name: Deploy project
-          #command: eb deploy --staged prod_env
           command: eb deploy
 
 # Orchestrate our job run sequence
