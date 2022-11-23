@@ -78,8 +78,6 @@ jobs:
 workflows:
   aws-cli:
     jobs:
-      - aws-cli-cred-setup:
-          context: aws
-  build:
-    jobs:
+      - aws-cli-cred-setup
       - build
+
