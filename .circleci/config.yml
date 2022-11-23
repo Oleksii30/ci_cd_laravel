@@ -23,6 +23,9 @@ jobs:
 
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    branches:
+       only:
+         - circleci
     steps:
       - checkout
 
@@ -54,10 +57,10 @@ jobs:
             - node_modules
 
       # prepare the database
-      - run: touch storage/testing.sqlite
-      - run: php artisan migrate --env=testing --database=sqlite_testing --force
+      # - run: touch storage/testing.sqlite
+      # - run: php artisan migrate --env=testing --database=sqlite_testing --force
 
       # run tests with phpunit or codecept
       #- run: ./vendor/bin/phpunit
-      - run: ./vendor/bin/codecept build
-      - run: ./vendor/bin/codecept run
+      # - run: ./vendor/bin/codecept build
+      # - run: ./vendor/bin/codecept run
