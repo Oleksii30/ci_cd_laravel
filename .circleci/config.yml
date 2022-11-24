@@ -70,7 +70,7 @@ jobs:
       - run:
           name: Deploy project
           command: |
-            eb init prod_env
+            eb init ci_cd_laravel/prod_env
             eb deploy prod_env
             eb status
 
