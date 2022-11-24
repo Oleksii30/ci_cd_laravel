@@ -69,7 +69,10 @@ jobs:
           # aws-region: AWS_REGION_NAME
       - run:
           name: Deploy project
-          command: eb deploy
+          command: |
+            eb init
+            eb deploy prod_env
+            eb status
 
 # Orchestrate our job run sequence
 workflows:
